@@ -14,15 +14,15 @@ class TestCreateUser:
         assert user.status_code == 403 and user.json()["success"] == False
 
     @allure.description('Нельзя создать пользователя без почты')
-    def test_can_not_create_new_user_without_mail(self, create_body_user_fixture):
-        user_body = create_body_user_fixture
+    def test_can_not_create_new_user_without_mail(self, create_user_fixture):
+        user_body = create_user_fixture[1]
         user_body["email"] = ''
         user = BurgerApi.create_user(user_body)
         assert user.status_code == 403 and user.json()["success"] == False and user.json()["message"] == "Email, password and name are required fields"
 
     @allure.description('Нельзя создать пользователя без пароля')
-    def test_can_not_create_new_user_without_password(self, create_body_user_fixture):
-        user_body = create_body_user_fixture
+    def test_can_not_create_new_user_without_password(self, create_user_fixture):
+        user_body = create_user_fixture[1]
         user_body["password"] = ''
         user = BurgerApi.create_user(user_body)
         assert user.status_code == 403 and user.json()["success"] == False and user.json()["message"] == "Email, password and name are required fields"
